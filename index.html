@@ -46,7 +46,7 @@
       const n_meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', ' DEZ'];
 
                        
-      const n_anos = ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', 'OUT', 'NOV', 'DEZ'];
+      const n_anos = ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];
       
       init();
       animate();
@@ -101,9 +101,9 @@
         const textureLoader = new THREE.TextureLoader()
         
         const matcapTexture = []
-        matcapTexture[0] = textureLoader.load('https://cdn.glitch.com/ed06f7bf-25c2-43ad-a0ce-28a690fc7cd3%2F2.png?v=1614866203348')
-        matcapTexture[1] = textureLoader.load('https://cdn.glitch.com/ed06f7bf-25c2-43ad-a0ce-28a690fc7cd3%2F8.png?v=1614866203626')
-        matcapTexture[2] = textureLoader.load('https://cdn.glitch.com/ed06f7bf-25c2-43ad-a0ce-28a690fc7cd3%2F7.png?v=1614866203347')
+        matcapTexture[0] = textureLoader.load('https://makio135.com/matcaps/64/C7C7D7_4C4E5A_818393_6C6C74-64px.png')
+        matcapTexture[1] = textureLoader.load('https://makio135.com/matcaps/64/736655_D9D8D5_2F281F_B1AEAB-64px.png')
+        matcapTexture[2] = textureLoader.load('https://makio135.com/matcaps/64/7A7A7A_D9D9D9_BCBCBC_B4B4B4-64px.png')
         
         
         
@@ -214,6 +214,35 @@
           }
     });
         
+        let anosGeometry = [];
+        
+        fontLoader.load(
+    './helvetiker_regular.typeface.json',
+    (font) =>
+    {        
+            
+          for(let m = 0; m < n_anos.length; m++){
+             
+            anosGeometry[m] = new THREE.TextBufferGeometry(
+            n_anos[m],
+            {
+                font: font,
+                size: 0.3,
+                height: 0.2,
+                curveSegments: 3,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelOffset: 0,
+                bevelSegments: 2
+            }
+        );
+ 
+         
+        anosGeometry[m].center();
+    //console.log(n_anos.length);
+          }
+    });
         
         
         const geometry = new THREE.CylinderGeometry(
@@ -232,6 +261,7 @@
             const text = [];
             const nome_meses = [];
          
+            let j = 0;
             
             for(let i = 0; i < quantidade; i++){
               
@@ -240,10 +270,23 @@
            // });
             
             //mesh[i].position.x = getRandomArbitrary(-2, 2);
+              
             if(i%12 == 0){
               posz = posz - 0.5;
               posx = -1;
               tex = tex + 1;
+              
+              ano[j] = new THREE.Mesh(anosGeometry[j], material[0]);
+              ano[j].position.x = posx-0.2;
+              ano[j].position.y = 0;
+              ano[j].position.z = posz;
+              ano[j].rotation.x = -1.5708; 
+              ano[j].scale.set(0.2, 0.2, 0.1);
+        //text.translate(0.0,0.2,0.0)
+        //scene.add(text)
+              group.add(ano[j]);
+              
+              j++;
               
               } else {
                 posx = posx + 0.19;
@@ -271,7 +314,7 @@
               
             group.add(mesh[i]);
             
-            text[i] = new THREE.Mesh(textGeometry[i], material[2]);
+            text[i] = new THREE.Mesh(textGeometry[i], material[0]);
         //text.material.transparent = true;
             // set opacity to 50%
         //text.material.opacity = 0.5;
@@ -286,7 +329,7 @@
               
               
              if(i<12){
-               nome_meses[i] = new THREE.Mesh(mesesGeometry[i], material[2]);
+               nome_meses[i] = new THREE.Mesh(mesesGeometry[i], material[0]);
                nome_meses[i].position.x = posx;
               nome_meses[i].position.y = 0;
               nome_meses[i].position.z = posz+0.2;
@@ -302,8 +345,9 @@
               
         group.position.setFromMatrixPosition(reticle.matrix);
             
-        group.scale.set(0.1, 0.1, 0.1);
+        group.scale.set(0.5,0.5,0.5);
         scene.add(group);    
+            
             
             
             let  clock = new THREE.Clock();
