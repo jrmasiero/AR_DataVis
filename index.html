@@ -254,7 +254,7 @@
         function onSelect() {
           if (reticle.visible) {
             
-            let posz = 0;
+            let posz = 2;
             let posx = -1;
             
             let tex = -1
@@ -280,7 +280,9 @@
               ano[j].position.x = posx-0.2;
               ano[j].position.y = 0;
               ano[j].position.z = posz;
-              ano[j].rotation.x = -1.5708; 
+              ano[j].rotation.y = -1.5708; 
+              //ano[j].rotation.x = -1.5708; 
+              
               ano[j].scale.set(0.2, 0.2, 0.1);
         //text.translate(0.0,0.2,0.0)
         //scene.add(text)
@@ -321,7 +323,8 @@
         
         text[i].position.x = posx;
         text[i].position.y = 0;
-        text[i].position.z = posz;      
+        text[i].position.z = posz;
+        text[i].rotation.y = -1.5708;
         text[i].scale.set(0.2, 0.2, 0.1);
         //text.translate(0.0,0.2,0.0)
         //scene.add(text)
@@ -333,7 +336,8 @@
                nome_meses[i].position.x = posx;
               nome_meses[i].position.y = 0;
               nome_meses[i].position.z = posz+0.2;
-               nome_meses[i].rotation.x = -1.5708; 
+               //nome_meses[i].rotation.x = -1.5708;
+               nome_meses[i].rotation.y = -1.5708; 
                 nome_meses[i].scale.set(0.2, 0.2, 0.1);
         //text.translate(0.0,0.2,0.0)
         //scene.add(text)
@@ -343,9 +347,9 @@
         
             };
               
-        group.position.setFromMatrixPosition(reticle.matrix);
-            
-        group.scale.set(0.5,0.5,0.5);
+        group.position.setFromMatrixPosition(reticle.matrix);    
+        group.scale.set(0.1,0.1,0.1);
+        group.rotation.y = 1.5708;    
         scene.add(group);    
             
             
